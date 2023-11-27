@@ -2,8 +2,61 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Press Start 2P";
+  color: rgba(238, 215, 215, 1);
 }
 
 body {
   background-color: #828282;
+}
+
+header {
+  background-color: #626262;
+  position: fixed;
+  height: 100px;
+  width: 70%;
+  top: 0px;
+  left: calc(50% - 35%);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  border-radius: 10px;
+}
+
+header h1 {
+  font-size: 40px;
+}
+header form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 400px;
+}
+
+header input {
+  width: 300px;
+  height: 40px;
+  font-size: 15px;
+  color: black;
+  border-radius: 10px;
+}
+header button {
+  height: 40px;
+  width: 80px;
+  color: rgba(116, 98, 107, 0.8);
+  border-radius: 10px;
+  border: none;
+  transition: all;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+}
+
+header button:active {
+  background-color: black;
+  transform: scale(0.8, 0.8);
+}
+
+header input:focus {
+  outline: 2px ridge rgba(176, 167, 172, 0.8);
+  border-radius: 10px;
 }
