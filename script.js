@@ -25,21 +25,35 @@ async function getWeatherFromCity(city, days) {
   x = await x.json();
   console.log(x);
   console.log(x.current);
+  let w = {
+    // w for weather
+    icon: x.current.condition.icon,
+    iconDescription: x.current.condition.text,
+    temp: x.current.temp_c,
+    tempFeelsLike: x.current.feelslike_c.address,
+    humidity: x.current.humidity,
+    cloud: x.current.cloud,
+    sunrise: x.forecast.forecastday[0].astro.sunrise,
+    sunset: x.forecast.forecastday[0].astro.sunset,
+    moonrise: x.forecast.forecastday[0].astro.moonrise,
+    moonset: x.forecast.forecastday[0].astro.moonset,
+    airQuality: x.current.air_quality["us-epa-index"],
+  };
   document.body.insertAdjacentHTML(
     "beforeend",
     `
-    <img src="${x.current.condition.icon}">
-    <div>${x.current.condition.text}</div>
+    <img src="${w.icon}">
+    <div>${w.iconDescription}</div>
     <br>
-    <div>Current temperature: ${x.current.temp_c}℃</div>
-    <div>Feels like: ${x.current.feelslike_c}℃</div>
-    <div>Humidity: ${x.current.humidity}</div>
-    <div>Cloud: ${x.current.cloud}%</div>
+    <div>Current temperature: ${w.temp}℃</div>
+    <div>Feels like: ${w.tempFeelsLike}℃</div>
+    <div>Humidity: ${w.humidity}</div>
+    <div>Cloud: ${w.cloud}%</div>
     <br>
-    <div>Sunrise: ${x.forecast.forecastday[0].astro.sunrise}</div>
-    <div>Sunset: ${x.forecast.forecastday[0].astro.sunset}</div>
-    <div>Moonrise: ${x.forecast.forecastday[0].astro.moonrise}</div>
-    <div>Moonset : ${x.forecast.forecastday[0].astro.moonset}</div>
+    <div>Sunrise: ${w.sunrise}</div>
+    <div>Sunset: ${w.sunset}</div>
+    <div>Moonrise: ${w.moonrise}</div>
+    <div>Moonset : ${w.moonset}</div>
     <br>
     <div>Air quality: ${x.current.air_quality["us-epa-index"]}</div>
     `
