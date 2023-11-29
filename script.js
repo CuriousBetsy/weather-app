@@ -1,10 +1,12 @@
 "use strict";
-
+// Отрисовка погоды по запросу из формы
 document.querySelector("header form").addEventListener("submit", function (e) {
   e.preventDefault();
   // console.log(typeof this.querySelector("input").value);
-  getWeatherFromCity(this.querySelector("input").value, 1);
+  getWeatherFromCity(this.querySelector("input").value);
 });
+
+// При загрузке страницы код сразу получает геоданные из браузера и вызывает функцию, которая отрисовывает погоду для нынешней локации
 navigator.geolocation.getCurrentPosition(
   (position) => {
     let lat = position.coords.latitude;
@@ -14,8 +16,7 @@ navigator.geolocation.getCurrentPosition(
         return res.json();
       })
       .then((data) => {
-        console.log(data.address.town);
-        getWeatherFromCity(data.address.town, 1);
+        getWeatherFromCity(data.address.city || data.address.town);
       });
   },
   () => {
@@ -23,13 +24,13 @@ navigator.geolocation.getCurrentPosition(
   }
 );
 
-async function getWeatherFromCity(city, days = 1) {
+// функция, которая вытаскивает погоду с сервера
+async function getWeatherFromCity(city, days = 2) {
   let x = await fetch(
     `http://api.weatherapi.com/v1/forecast.json?key=314c348aacb744639aa165431232111&q=${city}&days=${days}&aqi=yes&alerts=no`
   );
   x = await x.json();
   console.log(x);
-  console.log(x.current);
   let w = {
     // w for weather
     city: x.location.name,
