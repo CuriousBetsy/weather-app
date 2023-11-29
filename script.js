@@ -3,7 +3,9 @@
 document.querySelector("header form").addEventListener("submit", function (e) {
   e.preventDefault();
   // console.log(typeof this.querySelector("input").value);
+  document.querySelector(".main-container").remove();
   getWeatherFromCity(this.querySelector("input").value);
+  document.querySelector(".country").style.fontSize = "60px";
 });
 
 // При загрузке страницы код сразу получает геоданные из браузера и вызывает функцию, которая отрисовывает погоду для нынешней локации
@@ -49,29 +51,69 @@ async function getWeatherFromCity(city, days = 2) {
     moonset: x.forecast.forecastday[0].astro.moonset,
     airQuality: x.current.air_quality["us-epa-index"],
   };
+
   document.body.insertAdjacentHTML(
     "beforeend",
     `
-    <div>
-    <div>${w.country}, ${w.city}</div>
-    <img src="${w.icon}">
-    <div>${w.iconDescription}</div>
-    <br>
-    <div>Current temperature: ${w.temp}℃</div>
-    <div>Feels like: ${w.tempFeelsLike}℃</div>
-    <div>Humidity: ${w.humidity}</div>
-    <div>Cloud: ${w.cloud}%</div>
-    <div>Wind speed: ${w.windSpeed}km/h</div>
-    <div>Wind direction: ${w.windDirection}</div>
-    <br>
-    <div>Sunrise: ${w.sunrise}</div>
-    <div>Sunset: ${w.sunset}</div>
-    <div>Moonrise: ${w.moonrise}</div>
-    <div>Moonset : ${w.moonset}</div>
-    <br>
-    <div>Air quality: ${x.current.air_quality["us-epa-index"]}</div>
-    <br>
-    <br>
+    <div class="main-container">
+    <div class="temp-and-location">
+    <img
+    class="icon"
+    src="${w.icon}"
+    />
+    <p class="country">${w.country}</p>
+    <p class="city">${w.city}</p>
+    <p class="current-temp">Current temperature: ${w.temp}</p>
+    <p class="feels-like">Feels like: ${w.tempFeelsLike}</p>
+    </div>
+    
+    <div class="additional-data">
+    <p>Humidity: ${w.humidity}%</p>
+    <p>Cloud: ${w.cloud}%</p>
+    <p>Wind speed: ${w.windSpeed}km/h</p>
+    <p>Wind direction: ${w.windDirection}</p>
+    <p>Air quality: 1</p>
+    </div>
+    <div class="sun-moon">
+    <p>Sunrise: ${w.sunrise}</p>
+    <p>Sunset: ${w.sunset}</p>
+    <p>Moonrise: ${w.moonrise}</p>
+    <p>Moonset : ${w.moonset}</p>
+    </div>
+    <div class="tf-hours">
+    </div>
+    </div>
+    </div>
     `
   );
+  tfHours(x.forecast.forecastday).forEach((hour) => {
+    document.querySelector(".tf-hours").insertAdjacentHTML(
+      "beforeend",
+      `
+      <div class="hour">
+          <img src="https:${hour.condition.icon}" />
+          <p class="temp">${Math.round(hour.temp_c)}C</p>
+          <p class="time">${hour.time.slice(-5)}</p>
+        </div>
+      `
+    );
+  });
+
+  if (w.country.length > 7) {
+    document.querySelector(".country").style.fontSize = "30px";
+  }
+}
+
+// FUNCTION THAT CREATES AN ARRAY OF THE NEXT 24 hours;
+function tfHours(forecastday) {
+  let arr = [];
+  //forecast day is the array of days with full 24 hours forecasts
+  for (let i = new Date().getHours(); i < 24; i++) {
+    arr.push(forecastday[0].hour[i]);
+  }
+  for (let i = 0; arr.length < 24; i++) {
+    arr.push(forecastday[1].hour[i]);
+  }
+  console.log(arr);
+  return arr;
 }
