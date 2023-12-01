@@ -292,7 +292,7 @@ header input:focus {
 
   .hour {
     height: 100%;
-    width: 100px;
+    width: 115px;
   }
   .hour img {
     transform: scale(0.5, 0.5);
