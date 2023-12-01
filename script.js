@@ -56,31 +56,33 @@ async function getWeatherFromCity(city, days = 2) {
     "beforeend",
     `
     <div class="main-container">
-    <div class="temp-and-location">
+    <div class="temp-and-location border">
     <img
     class="icon"
     src="${w.icon}"
     />
     <p class="country">${w.country}</p>
     <p class="city">${w.city}</p>
-    <p class="current-temp">Current temperature: ${w.temp}</p>
-    <p class="feels-like">Feels like: ${w.tempFeelsLike}</p>
+    <p class="current-temp">Current temperature: ${w.temp}C</p>
+    <p class="feels-like">Feels like: ${w.tempFeelsLike}C</p>
     </div>
     
-    <div class="additional-data">
+    <div class="additional-data border">
     <p>Humidity: ${w.humidity}%</p>
     <p>Cloud: ${w.cloud}%</p>
     <p>Wind speed: ${w.windSpeed}km/h</p>
     <p>Wind direction: ${w.windDirection}</p>
     <p>Air quality: 1</p>
     </div>
-    <div class="sun-moon">
+    <div class="sun-moon border">
     <p>Sunrise: ${w.sunrise}</p>
     <p>Sunset: ${w.sunset}</p>
     <p>Moonrise: ${w.moonrise}</p>
     <p>Moonset : ${w.moonset}</p>
     </div>
-    <div class="tf-hours">
+    <div class="tf-hours-wrapper">
+    <div class="tf-hours border">
+    </div>
     </div>
     </div>
     </div>
