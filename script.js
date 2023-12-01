@@ -29,8 +29,9 @@ navigator.geolocation.getCurrentPosition(
 // функция, которая вытаскивает погоду с сервера
 async function getWeatherFromCity(city, days = 2) {
   let x = await fetch(
-    `http://api.weatherapi.com/v1/forecast.json?key=314c348aacb744639aa165431232111&q=${city}&days=${days}&aqi=yes&alerts=no`
+    `https://api.weatherapi.com/v1/forecast.json?key=314c348aacb744639aa165431232111&q=${city}&days=${days}&aqi=yes&alerts=no`
   );
+  console.log(x);
   x = await x.json();
   console.log(x);
   let w = {
